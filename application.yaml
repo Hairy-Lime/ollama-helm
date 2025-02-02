@@ -12,16 +12,8 @@ spec:
     targetRevision: main
     path: .
     helm:
-      releaseName: ollama
-      values: |
-        replicaCount: 1
-        persistentVolume:
-          enabled: true
-          size: "30Gi"
-        ollama:
-          models:
-            pull:
-              - phi4
+      valueFiles:
+        - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: ollama
@@ -31,3 +23,4 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true  # Add this to help with deployment generation

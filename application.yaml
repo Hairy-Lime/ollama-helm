@@ -8,12 +8,11 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/Hairy-Lime/ollama-helm
-    targetRevision: main
-    path: .
+    repoURL: https://otwld.github.io/ollama-helm
+    targetRevision: 1.0.4
+    chart: ollama
     helm:
-      valueFiles:
-        - values.yaml
+      releaseName: ollama
   destination:
     server: https://kubernetes.default.svc
     namespace: ollama
@@ -23,4 +22,3 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-      - ServerSideApply=true  # Add this to help with deployment generation

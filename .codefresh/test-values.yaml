@@ -1,0 +1,23 @@
+replicaCount: 1
+
+persistentVolume:
+  enabled: true
+  size: "10Gi"  # Smaller size for testing
+
+ollama:
+  models:
+    pull:
+      - llama2
+
+service:
+  type: ClusterIP
+  port: 11434
+
+# Minimal resources for testing
+resources:
+  requests:
+    cpu: "500m"
+    memory: "1Gi"
+  limits:
+    cpu: "1"
+    memory: "2Gi"

@@ -1,10 +1,10 @@
 version: '1.0'
 triggers:
   - event: push.heads
-    workflow: ollama-helm-release
     branch:
       - main
+    workflow: ollama-helm-pipeline
   - event: pull_request.opened
-    workflow: ollama-helm-release
+    workflow: ollama-helm-pipeline
   - event: pull_request.synchronize
-    workflow: ollama-helm-release
+    workflow: ollama-helm-pipeline

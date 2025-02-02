@@ -21,7 +21,7 @@ spec:
         ollama:
           models:
             pull:
-              - llama2
+              - phi4
   destination:
     server: https://kubernetes.default.svc
     namespace: ollama

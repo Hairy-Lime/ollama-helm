@@ -1,0 +1,51 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: ollama-helm-release
+  namespace: codefresh
+spec:
+  entrypoint: release
+  templates:
+    - name: release
+      dag:
+        tasks:
+          - name: lint
+            template: helm-lint
+          - name: package
+            template: helm-package
+            dependencies: [lint]
+          - name: deploy-test
+            template: helm-test-deploy
+            dependencies: [package]
+
+    - name: helm-lint
+      container:
+        image: alpine/helm:3.12.0
+        command: [helm]
+        args: 
+          - lint
+          - .
+
+    - name: helm-package
+      container:
+        image: alpine/helm:3.12.0
+        command: [helm]
+        args:
+          - package
+          - .
+          - --destination
+          - ./charts
+
+    - name: helm-test-deploy
+      container:
+        image: alpine/helm:3.12.0
+        command: [helm]
+        args:
+          - upgrade
+          - --install
+          - --namespace
+          - ollama-test
+          - --create-namespace
+          - --wait
+          - ollama
+          - ./charts/*.tgz
